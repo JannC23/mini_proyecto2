@@ -1,10 +1,11 @@
+import java.util.ArrayList;
+
 public class Entrenador {
     private String nombre;
-    private String[] Equipo = new String[2];
-    
-    public Entrenador(String nombre, String[] equipo) {
+    private ArrayList<Pokemon> equipo = new ArrayList<>();
+    public Entrenador(String nombre, Pokemon equipo) {
         this.nombre = nombre;
-        Equipo = equipo;
+        this.equipo.add(equipo);
     }
 
     public String getNombre() {
@@ -15,12 +16,20 @@ public class Entrenador {
         this.nombre = nombre;
     }
 
-    public String[] getEquipo() {
-        return Equipo;
+    public ArrayList<Pokemon> getEquipo() {
+        return equipo;
     }
 
-    public void setEquipo(String[] equipo) {
-        Equipo = equipo;
+    public void setEquipo(ArrayList<Pokemon> equipo) {
+        if(equipo.size() > 3){
+            System.out.println("El equipo no puede tener más de tres Pokémon");
+            return;
+        }
+        this.equipo.clear();
+        for(Pokemon pokemon : equipo){
+            this.equipo.add(pokemon)
+        }
+        
     }
     
 }
