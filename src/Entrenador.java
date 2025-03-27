@@ -3,9 +3,10 @@ import java.util.ArrayList;
 public class Entrenador {
     private String nombre;
     private ArrayList<Pokemon> equipo = new ArrayList<>();
-    public Entrenador(String nombre, Pokemon equipo) {
+
+    public Entrenador(String nombre) {
         this.nombre = nombre;
-        this.equipo.add(equipo);
+        this.equipo = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -27,7 +28,7 @@ public class Entrenador {
         }
         this.equipo.clear();
         for(Pokemon pokemon : equipo){
-            this.equipo.add(pokemon)
+            this.equipo.add(pokemon);
         }
         
     }
