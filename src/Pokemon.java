@@ -1,10 +1,13 @@
+import java.util.Scanner;
+
 public class Pokemon {
+    public Scanner scanner = new Scanner(System.in);
     private String nombre;
     private Tipo[] tipo = {Tipo.FUEGO, Tipo.PLANTA, Tipo.ELECTRICO, Tipo.AGUA};
     private int puntosSalud;
-
+    private Ataque[] ataques = new Ataque[4];
     
-    public Pokemon(String nombre, Pokemon.Tipo[] tipo, int puntosSalud) {
+    public Pokemon(String nombre, Tipo[] tipo, int puntosSalud) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.puntosSalud = puntosSalud;
