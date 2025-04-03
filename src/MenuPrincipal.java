@@ -51,14 +51,14 @@ public class MenuPrincipal {
                 case 3:
                     // Seleccionar Pokemon
                     int opcionPokemon;
-                    System.out.println("1. Seleccionar pokemon manualmente: ");
+                    System.out.println("\n1. Seleccionar pokemon manualmente: ");
                     System.out.println("2. Seleccionar pokemon aleatoriamente: ");
+                    System.out.print("Seleccione una opcion: ");
                     opcionPokemon = entrada.nextInt();
                     entrada.nextLine();
 
                     switch (opcionPokemon) {
                         case 1:
-                        // Seleccion de Pokemon manualmente
                             if (entrenador1 != null && entrenador2 != null) {
                                 System.out.println("\n" + entrenador1.getNombre() + ", selecciona los 3 pokemones con los que quieres luchar:");
                                 entrenador1.setEquipo(Pokemon.seleccionarEquipoPokemon()); // Seleccion de Pokemon para el primer entrenador
@@ -71,8 +71,13 @@ public class MenuPrincipal {
                             break;
 
                         case 2:
-                        // Seleccion de Pokemon aleatoriamente
-                            
+                            if (entrenador1 != null && entrenador2 != null) {
+                                System.out.println("\nLos equipos de cada entrenador fueron creados exitosamente:");
+                                entrenador1.setEquipo(Pokemon.crearPokemonAleatorio()); // Seleccion de Pokemon aleatoriamente para el primer entrenador
+                                entrenador2.setEquipo(Pokemon.crearPokemonAleatorio()); // Seleccion de Pokemon aleatoriamente para el segundo entrenador
+                            } else {
+                                System.out.println("Primero debes crear los entrenadores.");
+                            }
                             break;
 
                         default:
@@ -84,12 +89,12 @@ public class MenuPrincipal {
                 case 4:
                     // Mostrar los Pokemon seleccionados
                     if (entrenador1 != null && entrenador2 != null) {
-                        System.out.println("\nPokemon seleccionados por " + entrenador1.getNombre() + ":");
+                        System.out.println("\nPokemon de " + entrenador1.getNombre() + ":");
                         for (Pokemon pokemon : entrenador1.getEquipo()) {
                             System.out.println(pokemon.getNombre() + " (TIPO " + pokemon.getTipo() + ") - VIDA (" + pokemon.getPuntosSalud() + ")");
                         }
 
-                        System.out.println("\nPokemon seleccionados por " + entrenador2.getNombre() + ":");
+                        System.out.println("\nPokemon de " + entrenador2.getNombre() + ":");
                         for (Pokemon pokemon : entrenador2.getEquipo()) {
                             System.out.println(pokemon.getNombre() + " (TIPO " + pokemon.getTipo() + ") - VIDA (" + pokemon.getPuntosSalud() + ")");
                         }
@@ -110,6 +115,5 @@ public class MenuPrincipal {
         } while (opcion != 5); // Cambie la opcion de salida a 4
 
         entrada.close();
-
     }
 }

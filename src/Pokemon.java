@@ -69,7 +69,7 @@ public class Pokemon {
         for (int j = 0; j < 3; j++) { // Seleccionar 3 Pokemon
             System.out.println("\nSelecciona el Pokemon " + (j + 1) + ":");
             for (int i = 0; i < listaPokemon.length; i++) { // Mostrar lista de Pokemon disponibles
-                    System.out.println((i + 1) + ". " + listaPokemon[i].getNombre() + " (TIPO: " + listaPokemon[i].getTipo() + ") - VIDA: " + listaPokemon[i].getPuntosSalud());               
+                System.out.println((i + 1) + ". " + listaPokemon[i].getNombre() + " (TIPO: " + listaPokemon[i].getTipo() + ") - VIDA: " + listaPokemon[i].getPuntosSalud());
             }
 
             int opcion;
@@ -98,7 +98,29 @@ public class Pokemon {
         return equipo; // Retorna el equipo completo
     }
 
-    public static void crearPokemonAleatorio() {
-        
+    public static ArrayList<Pokemon> crearPokemonAleatorio() {
+        PokemonEnum[] listaPokemon = PokemonEnum.values();
+        ArrayList<Pokemon> equipo = new ArrayList<>(); // Lista para almacenar los 3 Pokemon seleccionados
+        boolean[] ocupados = new boolean[listaPokemon.length]; // Array para marcar los Pokemon seleccionados
+
+        for (int i = 0; i < 3; i++) { // Generar 3 Pokemon aleatorios
+            Pokemon pokemonAleatorio;
+            int numeroAleatorio;
+
+            do {
+                numeroAleatorio = (int) (Math.random() * listaPokemon.length); // Generar un numero aleatorio
+                if (!ocupados[numeroAleatorio]) { // Verificar si el Pokemon no ha sido seleccionado antes
+                    pokemonAleatorio = new Pokemon(listaPokemon[numeroAleatorio]); // Crear el Pokemon
+                    ocupados[numeroAleatorio] = true; // Marcar como seleccionado
+                    break;
+                } else {
+                    pokemonAleatorio = null; // Reiniciar si ya fue seleccionado
+                }
+            } while (pokemonAleatorio == null); // Repetir hasta que se genere un Pokemon valido
+
+            equipo.add(pokemonAleatorio); // Agregar al equipo
+        }
+
+        return equipo; // Retorna el equipo completo
     }
 }
