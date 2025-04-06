@@ -14,6 +14,36 @@ public class Pokemon {
         this.nombre = pokemonEnum.getNombre();
         this.tipo = pokemonEnum.getTipo();
         this.puntosSalud = pokemonEnum.getPuntosSalud();
+        asignarAtaquesPredeterminados(); // Asignar ataques al crear el Pokémon
+    }
+
+    private void asignarAtaquesPredeterminados() {
+        switch (this.tipo) {
+            case FUEGO:
+                this.ataques[0] = new Ataque("Lanzallamas", "Especial", 50);
+                this.ataques[1] = new Ataque("Ascuas", "Especial", 30);
+                this.ataques[2] = new Ataque("Giro Fuego", "Especial", 40);
+                this.ataques[3] = new Ataque("Colmillo Ígneo", "Físico", 45);
+                break;
+            case AGUA:
+                this.ataques[0] = new Ataque("Pistola Agua", "Especial", 40);
+                this.ataques[1] = new Ataque("Hidrobomba", "Especial", 60);
+                this.ataques[2] = new Ataque("Surf", "Especial", 50);
+                this.ataques[3] = new Ataque("Aqua Jet", "Físico", 35);
+                break;
+            case PLANTA:
+                this.ataques[0] = new Ataque("Hoja Afilada", "Especial", 50);
+                this.ataques[1] = new Ataque("Latigazo", "Físico", 40);
+                this.ataques[2] = new Ataque("Rayo Solar", "Especial", 60);
+                this.ataques[3] = new Ataque("Drenadoras", "Especial", 30);
+                break;
+            case ELECTRICO:
+                this.ataques[0] = new Ataque("Impactrueno", "Especial", 40);
+                this.ataques[1] = new Ataque("Rayo", "Especial", 50);
+                this.ataques[2] = new Ataque("Trueno", "Especial", 60);
+                this.ataques[3] = new Ataque("Chispa", "Físico", 35);
+                break;
+        }
     }
 
     public enum Tipo {
@@ -24,24 +54,19 @@ public class Pokemon {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public Tipo getTipo() {
         return tipo;
-    }
-
-    public void setTipo(Tipo tipo) {
-        this.tipo = tipo;
     }
 
     public int getPuntosSalud() {
         return puntosSalud;
     }
 
-    public void setPuntosSalud(int puntosSalud) {
-        this.puntosSalud = puntosSalud;
+    public void recibirDanio(int danio) {
+        this.puntosSalud -= danio;
+        if (this.puntosSalud < 0) {
+            this.puntosSalud = 0;
+        }
     }
 
     public Ataque[] getAtaques() {
@@ -52,12 +77,19 @@ public class Pokemon {
         this.ataques = ataques;
     }
 
-    public int getNumero() {
-        return numero;
+    public int calcularDanio(Ataque ataque, Pokemon oponente) {
+        int danio = (int) Math.round(ataque.getPotencia());
+        if (tieneVentaja(oponente)) {
+            danio += danio * 0.3; // Aumenta el daño en un 30% si hay ventaja de tipo
+        }
+        return danio;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
+    private boolean tieneVentaja(Pokemon oponente) {
+        if (this.tipo == Tipo.FUEGO && oponente.tipo == Tipo.PLANTA) return true;
+        if (this.tipo == Tipo.AGUA && oponente.tipo == Tipo.FUEGO) return true;
+        if (this.tipo == Tipo.PLANTA && oponente.tipo == Tipo.AGUA) return true;
+        return false;
     }
 
     public static ArrayList<Pokemon> seleccionarEquipoPokemon() {
