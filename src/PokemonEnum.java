@@ -1,6 +1,12 @@
 public enum PokemonEnum {
-    CHARMANDER(1, "Charmander", Pokemon.Tipo.FUEGO, 200),
+    CHARMANDER(1, "Charmander", Pokemon.Tipo.FUEGO, 180),
     BULBASAUR(2, "Bulbasaur", Pokemon.Tipo.PLANTA, 200),
+    PIKACHU(3, "Pikachu", Pokemon.Tipo.ELECTRICO, 150),
+    SQUIRTLE(4, "Squirtle", Pokemon.Tipo.AGUA, 220),
+    MEWTWO(5, "Mewtwo", Pokemon.Tipo.FUEGO, 300),
+    EEVEE(6, "Leafeon", Pokemon.Tipo.PLANTA, 170),
+    LAPRAS(7, "Lapras", Pokemon.Tipo.AGUA, 250),
+    MAGNEMITE(8, "Magnemite", Pokemon.Tipo.ELECTRICO, 140);
     PIKACHU(3, "Pikachu", Pokemon.Tipo.ELECTRICO, 200),
     SQUIRTLE(4, "Squirtle", Pokemon.Tipo.AGUA, 200),
     FLAREON(5, "Flareon", Pokemon.Tipo.FUEGO, 200),
