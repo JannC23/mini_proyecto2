@@ -143,8 +143,7 @@ public class Pokemon {
             danioBase /= 2; // Poco efectivo
         }
 
-        return danioBase;
-    }
+        return danioBase;    }
 
     private boolean tieneVentaja(Pokemon oponente) {
         if (this.tipo == Tipo.FUEGO && oponente.tipo == Tipo.PLANTA) return true;
