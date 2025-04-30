@@ -117,17 +117,43 @@ public class MenuPrincipal {
         Pokemon pokemon2 = entrenador2.elegirPokemonParaBatalla();
 
         while (pokemon1.getPuntosSalud() > 0 && pokemon2.getPuntosSalud() > 0) {
-            Pokemon primero = (pokemon1.getPuntosSalud() <= pokemon2.getPuntosSalud()) ? pokemon1 : pokemon2;
-            Pokemon segundo = (primero == pokemon1) ? pokemon2 : pokemon1;
-            Entrenador entrenadorPrimero = (primero == pokemon1) ? entrenador1 : entrenador2;
-            Entrenador entrenadorSegundo = (segundo == pokemon1) ? entrenador1 : entrenador2;
+            Pokemon primero, segundo;
+            Entrenador entrenadorPrimero, entrenadorSegundo;
 
+            // Determinar quién ataca primero
+            if (pokemon1.getVelocidad() > pokemon2.getVelocidad()) {
+                primero = pokemon1;
+                segundo = pokemon2;
+                entrenadorPrimero = entrenador1;
+                entrenadorSegundo = entrenador2;
+            } else if (pokemon1.getVelocidad() < pokemon2.getVelocidad()) {
+                primero = pokemon2;
+                segundo = pokemon1;
+                entrenadorPrimero = entrenador2;
+                entrenadorSegundo = entrenador1;
+            } else {
+                // Si tienen la misma velocidad, decidir al azar
+                if (Math.random() < 0.5) {
+                    primero = pokemon1;
+                    segundo = pokemon2;
+                    entrenadorPrimero = entrenador1;
+                    entrenadorSegundo = entrenador2;
+                } else {
+                    primero = pokemon2;
+                    segundo = pokemon1;
+                    entrenadorPrimero = entrenador2;
+                    entrenadorSegundo = entrenador1;
+                }
+            }
+
+            // Turno del primer Pokémon
             turno(entrenadorPrimero, primero, segundo);
             if (segundo.getPuntosSalud() <= 0) {
                 System.out.println("\n" + segundo.getNombre() + " se ha debilitado. ¡" + entrenadorPrimero.getNombre() + " gana!");
                 break;
             }
 
+            // Turno del segundo Pokémon
             turno(entrenadorSegundo, segundo, primero);
             if (primero.getPuntosSalud() <= 0) {
                 System.out.println("\n" + primero.getNombre() + " se ha debilitado. ¡" + entrenadorSegundo.getNombre() + " gana!");
@@ -136,17 +162,28 @@ public class MenuPrincipal {
         }
     }
 
-    private void turno(Entrenador entrenador, Pokemon atacante, Pokemon oponente) {
+    private void turno(Entrenador entrenador, Pokemon atacante, Pokemon defensor) {
         System.out.println("\nTurno de " + entrenador.getNombre() + " (" + atacante.getNombre() + ")");
-        System.out.println("Selecciona un ataque:");
-        for (int i = 0; i < atacante.getAtaques().length; i++) {
-            if (atacante.getAtaques()[i] != null) {
-                System.out.println((i + 1) + ". " + atacante.getAtaques()[i].getNombre());
-            }
+        Ataque[] ataques = atacante.getAtaques();
+        for (int i = 0; i < ataques.length; i++) {
+            System.out.println((i + 1) + ". " + ataques[i].getNombre() + " (Potencia: " + ataques[i].getPotencia() + ")");
         }
-        int ataqueSeleccionado = entrada.nextInt() - 1;
-        int danio = atacante.calcularDanio(atacante.getAtaques()[ataqueSeleccionado], oponente);
-        oponente.recibirDanio(danio);
-        System.out.println(atacante.getNombre() + " hizo " + danio + " de daño a " + oponente.getNombre());
+
+        Scanner entrada = new Scanner(System.in);
+        int opcion;
+        do {
+            System.out.print("Elige un ataque: ");
+            opcion = entrada.nextInt();
+            if (opcion < 1 || opcion > ataques.length) {
+                System.out.println("Opción no válida. Intenta nuevamente.");
+            }
+        } while (opcion < 1 || opcion > ataques.length);
+
+        Ataque ataqueSeleccionado = ataques[opcion - 1];
+        int danio = atacante.calcularDanio(ataqueSeleccionado, defensor);
+        defensor.recibirDanio(danio);
+
+        System.out.println(atacante.getNombre() + " usó " + ataqueSeleccionado.getNombre() + " y causó " + danio + " puntos de daño.");
+        System.out.println(defensor.getNombre() + " ahora tiene " + defensor.getPuntosSalud() + " puntos de salud.");
     }
 }
