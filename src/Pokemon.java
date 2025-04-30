@@ -5,6 +5,11 @@ public class Pokemon {
     private String nombre;
     private Tipo tipo;
     private int puntosSalud;
+    private int ataque; // Nuevo atributo
+    private int defensa; // Nuevo atributo
+    private int ataqueEspecial; // Nuevo atributo
+    private int defensaEspecial; // Nuevo atributo
+    private int velocidad; // Nuevo atributo
     private Ataque[] ataques = new Ataque[4];
     private int numero;
 
@@ -14,7 +19,53 @@ public class Pokemon {
         this.nombre = pokemonEnum.getNombre();
         this.tipo = pokemonEnum.getTipo();
         this.puntosSalud = pokemonEnum.getPuntosSalud();
+        this.ataque = pokemonEnum.getAtaque(); // Inicializar ataque
+        this.defensa = pokemonEnum.getDefensa(); // Inicializar defensa
+        this.ataqueEspecial = pokemonEnum.getAtaqueEspecial(); // Inicializar ataque especial
+        this.defensaEspecial = pokemonEnum.getDefensaEspecial(); // Inicializar defensa especial
+        this.velocidad = pokemonEnum.getVelocidad(); // Inicializar velocidad
         asignarAtaquesPredeterminados(); // Asignar ataques al crear el Pokémon
+    }
+
+    // Getters y setters para los nuevos atributos
+    public int getAtaque() {
+        return ataque;
+    }
+
+    public void setAtaque(int ataque) {
+        this.ataque = ataque;
+    }
+
+    public int getDefensa() {
+        return defensa;
+    }
+
+    public void setDefensa(int defensa) {
+        this.defensa = defensa;
+    }
+
+    public int getAtaqueEspecial() {
+        return ataqueEspecial;
+    }
+
+    public void setAtaqueEspecial(int ataqueEspecial) {
+        this.ataqueEspecial = ataqueEspecial;
+    }
+
+    public int getDefensaEspecial() {
+        return defensaEspecial;
+    }
+
+    public void setDefensaEspecial(int defensaEspecial) {
+        this.defensaEspecial = defensaEspecial;
+    }
+
+    public int getVelocidad() {
+        return velocidad;
+    }
+
+    public void setVelocidad(int velocidad) {
+        this.velocidad = velocidad;
     }
 
     private void asignarAtaquesPredeterminados() {
@@ -78,12 +129,21 @@ public class Pokemon {
     }
 
     public int calcularDanio(Ataque ataque, Pokemon oponente) {
-        int danio = (int) Math.round(ataque.getPotencia());
+        int nivel = 50; // Nivel fijo
+        int ataqueUsado = ataque.getTipoDano().equals("Físico") ? this.ataque : this.ataqueEspecial;
+        int defensaOponente = ataque.getTipoDano().equals("Físico") ? oponente.getDefensa() : oponente.getDefensaEspecial();
+
+        // Fórmula de daño
+        int danioBase = (int) (((2 * nivel / 5 + 2) * ataque.getPotencia() * ataqueUsado / defensaOponente) / 50) + 2;
+
+        // Aplicar ventaja de tipo
         if (tieneVentaja(oponente)) {
-            danio += danio * 0.3; // Aumenta el daño en un 30% si hay ventaja de tipo
+            danioBase *= 2; // Súper efectivo
+        } else if (oponente.tieneVentaja(this)) {
+            danioBase /= 2; // Poco efectivo
         }
-        return danio;
-    }
+
+        return danioBase;    }
 
     private boolean tieneVentaja(Pokemon oponente) {
         if (this.tipo == Tipo.FUEGO && oponente.tipo == Tipo.PLANTA) return true;
