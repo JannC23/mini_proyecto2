@@ -11,11 +11,18 @@ public class Pokemon {
     private int defensaEspecial; // Nuevo atributo
     private int velocidad; // Nuevo atributo
     private Ataque[] ataques = new Ataque[4];
+<<<<<<< HEAD
+    private String gifPath; // Agrega este atributo
+
+    // Constructor que usa el enum PokemonEnum
+    public Pokemon(PokemonEnum pokemonEnum) {
+=======
     private int numero;
 
     // Constructor que usa el enum PokemonEnum
     public Pokemon(PokemonEnum pokemonEnum) {
         this.numero = pokemonEnum.getNumero();
+>>>>>>> origin/main
         this.nombre = pokemonEnum.getNombre();
         this.tipo = pokemonEnum.getTipo();
         this.puntosSalud = pokemonEnum.getPuntosSalud();
@@ -24,6 +31,10 @@ public class Pokemon {
         this.ataqueEspecial = pokemonEnum.getAtaqueEspecial(); // Inicializar ataque especial
         this.defensaEspecial = pokemonEnum.getDefensaEspecial(); // Inicializar defensa especial
         this.velocidad = pokemonEnum.getVelocidad(); // Inicializar velocidad
+<<<<<<< HEAD
+        this.gifPath = pokemonEnum.getGifPath(); // NUEVO
+=======
+>>>>>>> origin/main
         asignarAtaquesPredeterminados(); // Asignar ataques al crear el Pokémon
     }
 
@@ -68,6 +79,13 @@ public class Pokemon {
         this.velocidad = velocidad;
     }
 
+<<<<<<< HEAD
+    public String getGifPath() {
+        return gifPath;
+    }
+
+=======
+>>>>>>> origin/main
     private void asignarAtaquesPredeterminados() {
         switch (this.tipo) {
             case FUEGO:
